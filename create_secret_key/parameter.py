@@ -4,6 +4,7 @@
 import os
 import sys
 import argparse
+from create_secret_key.key import HandleCredentials
 
 
 def get_arg():
@@ -36,17 +37,21 @@ def use_fun():
         # print(type(arg))
 
         if 'copy' in arg:
-            # 待填充
+            # TODO:待填充
             pass
             # copy_source_fun(arg[0])
+
         elif 'download' in arg:
-            # 待填充
+            # TODO:待填充
             pass
             # down_source_fun(arg[0], arg[1])
+
         elif 'config' in arg:
             if arg['config'] == 'cmt':
                 # 生成文件 .cmt/credentials
-                pass
+                handle = HandleCredentials()
+                handle.handle_main()
+
             elif arg['config'] == 'all':
                 print('Configure AWS Credentials...' + '* '*24)
                 os.system('aws configure')
@@ -64,14 +69,9 @@ def use_fun():
             elif arg['config'] == 'tencent':
                 pass
 
-
-    except:
-        pass
-
-
-
-
-
+    except Exception as e:
+        print(__file__)
+        print(e)
 
 
 
