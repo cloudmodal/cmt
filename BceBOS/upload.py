@@ -12,7 +12,7 @@
 """
 import os
 from baidubce.exception import BceError
-from initialization import BceAuthentication
+from .initialization import BceAuthentication
 
 
 class BceBOSUpload(BceAuthentication):

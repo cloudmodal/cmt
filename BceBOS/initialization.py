@@ -18,7 +18,7 @@ from baidubce.services.sts.sts_client import StsClient
 from baidubce.exception import BceError
 from baidubce.services.bos.bos_client import BosClient
 from baidubce.services.bos import storage_class
-from common import get_logger, get_config
+from .common import get_logger, get_config
 
 
 class BceAuthentication:

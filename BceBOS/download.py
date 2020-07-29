@@ -14,8 +14,8 @@ import os
 import pathlib
 
 from baidubce.exception import BceError
-from initialization import BceAuthentication
-from common import _read_bos_file_size, _count_md5
+from .initialization import BceAuthentication
+from .common import _read_bos_file_size, _count_md5
 
 
 class BceBOSDownload(BceAuthentication):
