@@ -24,15 +24,53 @@ class HandleCredentials:
                 os.mkdir(os.path.join(r'C:\Users', getpass.getuser(), '.cmt'))
                 self.create_platform_credentials(credentials_path)
             else:
-                self.modify_platform_credentials()
+                self.modify_platform_credentials(credentials_path)
 
         # elif s == 'Linux' or s == 'Darwin':
         #     # /home/username/.cmt
         #     lin = CreateUnixKey()
 
-    def modify_platform_credentials(self):
-        print('凭证已存在。。。')
-        pass
+    # 修改凭证文件
+    def modify_platform_credentials(self, path):
+
+        try:
+            with open(path, 'r+') as wr:
+                sx = wr.readlines()
+                # print(sx)
+                wr.seek(0, 0)
+                wr.truncate()
+
+                for i in sx:
+                    if i[:-1] == '[aws default]' or i[:-1] == '[ali default]' \
+                            or i[:-1] == '[BceDownloadBasic]':
+                        print(i[:-1])
+                        wr.write(i[:-1] + '\n')
+
+                    elif i[:-1] == 'Default Output Format [json]: json (Only support json)':
+                        print(i[:-1])
+                        wr.write(i[:-1] + '\n')
+
+                    elif i[:-4] == 'Default Language [zh|en] =':
+                        out = i.split('=')
+                        x = out[0] + out[1][:-1] + ' = '
+                        cred = input(x)
+                        c = 'en' if cred != 'zh' and cred != 'en' else cred
+                        data = i[:-4] + ' ' + c + '\n'
+                        wr.write(data)
+
+                    elif i == '\n':
+                        print()
+                        wr.write('\n')
+
+                    else:
+                        out = i.split('=')
+                        cred = input(out[0] + '[' + out[1].strip() + '] = ')
+                        data = out[0] + '= ' + cred + '\n'
+                        wr.write(data)
+
+            print('ok')
+        except Exception as e:
+            print(e)
 
     # 创建凭证文件
     def create_platform_credentials(self, path):
@@ -52,6 +90,13 @@ class HandleCredentials:
                         elif i[:-1] == 'Default Output Format [json]: json (Only support json)':
                             print(i[:-1])
                             wr.write(i[:-1] + '\n')
+
+                        elif i[:-1] == 'Default Language [zh|en] =':
+                            # default en
+                            cred = input(i[:-1] + ' ')
+                            c = 'en' if cred != 'zh' and cred != 'en' else cred
+                            data = i[:-1] + ' ' + c + '\n'
+                            wr.write(data)
 
                         elif i == '\n':
                             print()
