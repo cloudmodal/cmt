@@ -54,7 +54,14 @@ class HandleCredentials:
                         out = i.split('=')
                         x = out[0] + out[1][:-1] + ' = '
                         cred = input(x)
-                        c = 'en' if cred != 'zh' and cred != 'en' else cred
+
+                        if not cred:
+                            c = out[1].strip()
+                        elif cred != 'zh' and cred != 'en':
+                            c = 'en'
+                        else:
+                            c = cred
+
                         data = i[:-4] + ' ' + c + '\n'
                         wr.write(data)
 
@@ -65,7 +72,8 @@ class HandleCredentials:
                     else:
                         out = i.split('=')
                         cred = input(out[0] + '[' + out[1].strip() + '] = ')
-                        data = out[0] + '= ' + cred + '\n'
+                        c = cred if cred else out[1].strip()
+                        data = out[0] + '= ' + c + '\n'
                         wr.write(data)
 
             print('ok')
