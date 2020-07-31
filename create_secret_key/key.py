@@ -17,18 +17,24 @@ class HandleCredentials:
         s = platform.system()
 
         if s == 'Windows':
-            credentials_path = os.path.join(r'C:\Users', getpass.getuser(), '.cmt\credentials')
+            credentials_win_path = os.path.join(r'C:\Users', getpass.getuser(), '.cmt/credentials')
             file = Common()
 
-            if not file.file_exist(credentials_path):
+            if not file.file_exist(credentials_win_path):
                 os.mkdir(os.path.join(r'C:\Users', getpass.getuser(), '.cmt'))
-                self.create_platform_credentials(credentials_path)
+                self.create_platform_credentials(credentials_win_path)
             else:
-                self.modify_platform_credentials(credentials_path)
+                self.modify_platform_credentials(credentials_win_path)
 
-        # elif s == 'Linux' or s == 'Darwin':
-        #     # /home/username/.cmt
-        #     lin = CreateUnixKey()
+        elif s == 'Linux' or s == 'Darwin':
+            credentials_lin_path = os.path.join('/home', getpass.getuser(), '.cmt/credentials')
+            file = Common()
+
+            if not file.file_exist(credentials_lin_path):
+                os.mkdir(os.path.join('/home', getpass.getuser(), '.cmt'))
+                self.create_platform_credentials(credentials_lin_path)
+            else:
+                self.modify_platform_credentials(credentials_lin_path)
 
     # 修改凭证文件
     def modify_platform_credentials(self, path):
@@ -85,7 +91,7 @@ class HandleCredentials:
 
         # print(os.path.join(os.getcwd(), 'create_secret_key\credentials'))
         try:
-            with open(os.path.join(os.getcwd(), 'create_secret_key\credentials'), 'r') as re:
+            with open(os.path.join(os.getcwd(), 'create_secret_key/credentials'), 'r') as re:
                 with open(path, 'w') as wr:
                     sx = re.readlines()
 
