@@ -14,8 +14,8 @@ class Common:
     def __init__(self):
         pass
 
-    def create(self, path):
-        pass
+    def create_folder(self, path):
+        os.mkdir(path)
 
     def file_exist(self, path):
         return os.path.exists(path)

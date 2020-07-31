@@ -21,7 +21,7 @@ class HandleCredentials:
             file = Common()
 
             if not file.file_exist(credentials_win_path):
-                os.mkdir(os.path.join(r'C:\Users', getpass.getuser(), '.cmt'))
+                file.create_folder(os.path.join(r'C:\Users', getpass.getuser(), '.cmt'))
                 self.create_platform_credentials(credentials_win_path)
             else:
                 self.modify_platform_credentials(credentials_win_path)
@@ -31,7 +31,7 @@ class HandleCredentials:
             file = Common()
 
             if not file.file_exist(credentials_lin_path):
-                os.mkdir(os.path.join('/home', getpass.getuser(), '.cmt'))
+                file.create_folder(os.path.join('/home', getpass.getuser(), '.cmt'))
                 self.create_platform_credentials(credentials_lin_path)
             else:
                 self.modify_platform_credentials(credentials_lin_path)
