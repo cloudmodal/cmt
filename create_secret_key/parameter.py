@@ -2,15 +2,15 @@
 # -*- coding: utf-8 -*-
 
 import os
-import sys
 import argparse
 from create_secret_key.key import HandleCredentials
+from create_secret_key.operation_file import OperationFile
 
 
 def get_arg():
     """获取参数"""
     arg = argparse.ArgumentParser(add_help=False)
-    arg.argument_default=argparse.SUPPRESS
+    arg.argument_default = argparse.SUPPRESS
     arg.prog = 'CMT'
     # arg.usage = '%(prog)s [options]'
     arg.usage = 'python [options]'
@@ -19,9 +19,9 @@ def get_arg():
     # 添加参数
     arg.add_argument('-V', '--version', action='version', version='%(prog)s 1.0')
     arg.add_argument('-h', '--help', action='help', help='Show this help message and exit')
-    arg.add_argument('-cp', '--copy',help='Copy files [source... directory]', type=str, nargs=2, metavar='PATH',
+    arg.add_argument('-cp', '--copy', help='Copy files [source... directory]', type=str, nargs=2, metavar='PATH',
                      dest='copy')
-    arg.add_argument('-d', '--download',help='Download file [source... directory]', type=str, nargs=2,
+    arg.add_argument('-d', '--download', help='Download file [source... directory]', type=str, nargs=2,
                      metavar='PATH', dest='download')
 
     arg.add_argument('-configure', help='Set Up Your Credentials', nargs='?', const='cmt', dest='config')
@@ -37,18 +37,20 @@ def use_fun():
         # print(type(arg))
 
         if 'copy' in arg:
-            # TODO:待填充
-            pass
-            # copy_source_fun(arg[0])
+            copy_source_path = arg['copy'][0]
+            copy_target_path = arg['copy'][1]
+            cp = OperationFile()
+            cp.copy_source_fun(copy_source_path, copy_target_path)
 
         elif 'download' in arg:
-            # TODO:待填充
-            pass
-            # down_source_fun(arg[0], arg[1])
+            download_source_path = arg['download'][0]
+            download_target_path = arg['download'][1]
+            dw = OperationFile()
+            dw.down_source_fun(download_source_path, download_target_path)
 
         elif 'config' in arg:
             if arg['config'] == 'cmt':
-                # 生成文件 .cmt/credentials
+                # 处理平台凭证
                 handle = HandleCredentials()
                 handle.handle_main()
 
@@ -72,9 +74,3 @@ def use_fun():
     except Exception as e:
         print(__file__)
         print(e)
-
-
-
-
-
-
